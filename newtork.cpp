@@ -1,0 +1,84 @@
+#include <iostream>
+#include <sstream>
+using namespace std;
+
+int main()
+{
+    string address;
+    int a, b, c, d;
+    char dot;
+    char extra;
+
+    // Keep asking until valid IPv4 is entered
+    while (true)
+    {
+        cout << "Enter IPv4 Address: ";
+        cin >> address;
+
+        stringstream ss(address);
+
+        // Check IPv4 address
+        if ((ss >> a >> dot >> b >> dot >> c >> dot >> d)
+            && dot == '.'
+            && a >= 0 && a <= 255
+            && b >= 0 && b <= 255
+            && c >= 0 && c <= 255
+            && d >= 0 && d <= 255
+            && !(ss >> extra))
+        {
+            break;  // Valid address, exit loop
+        }
+
+        cout << "\nInvalid IPv4 Address!";
+        cout << "\nPlease enter a valid IPv4 address.\n\n";
+    }
+
+    cout << "\nValid IPv4 Address";
+
+    // Class A : 0 - 127
+    if (a >= 0 && a <= 127)
+    {
+        cout << "\nClass : A";
+
+        if (a == 10)
+            cout << "\n10.x.x.x is Reserved";
+
+        else if (a == 127)
+            cout << "\n127.x.x.x is Reserved";
+
+        cout << "\nNetwork ID : " << a << ".0.0.0";
+        cout << "\nHost ID    : " << b << "." << c << "." << d;
+    }
+
+    // Class B : 128 - 191
+    else if (a >= 128 && a <= 191)
+    {
+        cout << "\nClass : B";
+        cout << "\nNetwork ID : " << a << "." << b << ".0.0";
+        cout << "\nHost ID    : " << c << "." << d;
+    }
+
+    // Class C : 192 - 223
+    else if (a >= 192 && a <= 223)
+    {
+        cout << "\nClass : C";
+        cout << "\nNetwork ID : " << a << "." << b << "." << c << ".0";
+        cout << "\nHost ID    : " << d;
+    }
+
+    // Class D : 224 - 239
+    else if (a >= 224 && a <= 239)
+    {
+        cout << "\nClass : D";
+        cout << "\nUsed for Multicasting";
+    }
+
+    // Class E : 240 - 255
+    else
+    {
+        cout << "\nClass : E";
+        cout << "\nUsed for Experimental Purpose";
+    }
+
+    return 0;
+}
